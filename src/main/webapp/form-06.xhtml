@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Primefaces 7.0 Form</title>
+</h:head>
+<h:body>
+<h:form>
+<h:panelGrid>
+	<p:outputLabel 	 id="yyyy" value="First Name :" />
+	<p:inputText 	 value="#{pfBean.person.firstName}"/>
+	<p:outputLabel   value="Last Name :" />
+	<p:inputText     value="#{pfBean.person.lastName}"/>
+	<p:outputLabel value="Sex" />
+	<p:selectOneButton value="#{pfBean.person.sex}">
+		<f:selectItem itemLabel="Male" itemValue="M"/>
+		<f:selectItem itemLabel="Female" itemValue="F" />
+	</p:selectOneButton>
+	<p:commandButton value="Submit" 
+					 action="#{pfBean.submitButtonOnClick}"
+					 process="@form"
+					 update="xxxx"/>
+	<br/> 
+	<p:outputLabel  id="xxxx" value="FullName :#{pfBean.fullName}" /> 
+</h:panelGrid>
+</h:form>
+</h:body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body bgcolor="white">
+	<h:outputLabel for="name" value="Fistname:" />
+	<h:inputText value='#{bookBean.bookTitle}' />
+	<h:outputLabel for="name" value="Lastname:" />
+	<h:inputText value='#{bookBean.bookTitle}' />
+	<h:commandButton action="#{bookBean.add}" value="Add" type="button" style="margin-right: .5rem;" />
+
+</h:body>
+</html>
