@@ -9,17 +9,30 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:panel rendered="#{crudBean.mode != 'R'}">
+		<p:messages id="errorMessages" showDetail="true" autoUpdate="true"
+			closable="true" />
 		<p:panelGrid columns="2">
 			<p:outputLabel for="firstname_e" value="First Name" />
-			<p:inputText id="firstname_e" value="#{crudBean.employeeEdit.firstName}" autocomplete="off" required="true" requiredMessage="Please enter First Name" />
+			<p:inputText id="firstname_e"
+				value="#{crudBean.employeeEdit.firstName}" autocomplete="off"
+				required="true" requiredMessage="Please enter First Name" />
 
 			<p:outputLabel for="lastname_e" value="Last Name" />
-			<p:inputText id="lastname_e" value="#{crudBean.employeeEdit.lastName}" autocomplete="off" required="true" requiredMessage="Please enter Last Name" />
+			<p:inputText id="lastname_e"
+				value="#{crudBean.employeeEdit.lastName}" autocomplete="off"
+				required="true" requiredMessage="Please enter Last Name" />
 		</p:panelGrid>
 
-		<p:commandButton id="saveBtn" value="Create" update="@form" action="#{crudBean.saveBtnOnclick}" rendered="#{crudBean.mode == 'C'}" />
-		<p:commandButton id="updateBtn" value="Update" update="@form" action="#{crudBean.updateBtnOnclick}" disabled="#{crudBean.mode != 'U'}" />
-		<p:commandButton id="deleteBtn" value="Delete" update="@form" action="#{crudBean.deleteBtnOnclick}" rendered="#{crudBean.mode == 'U'}" />
-		<p:commandButton id="backPageBtn" value="Back" update="@form" action="#{crudBean.backBtnOnclick}" immediate="true" />
+		<p:commandButton id="saveBtn" value="Create" update="@form"
+			action="#{crudBean.saveBtnOnclick}"
+			rendered="#{crudBean.mode == 'C'}" />
+		<p:commandButton id="updateBtn" value="Update" update="@form"
+			action="#{crudBean.updateBtnOnclick}"
+			disabled="#{crudBean.mode != 'U'}" />
+		<p:commandButton id="deleteBtn" value="Delete" update="@form"
+			action="#{crudBean.deleteBtnOnclick}" icon="pi pi-trash"
+			styleClass="p-button-danger" rendered="#{crudBean.mode == 'U'}" />
+		<p:commandButton id="backPageBtn" value="Back" update="@form"
+			action="#{crudBean.backBtnOnclick}" immediate="true" />
 	</p:panel>
 </ui:composition>

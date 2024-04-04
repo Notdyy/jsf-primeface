@@ -1,115 +1,163 @@
-// CrudBean.java
-
 package my.example.view;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
-import org.primefaces.event.SelectEvent;
+import javax.faces.context.FacesContext;
 
 import my.example.model.Employee;
 import my.example.service.EmployeeServiceMemory;
 
+/**
+ * Managed bean for CRUD operations on Employee entities.
+ */
 @ManagedBean
 @ViewScoped
 public class CrudBean implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String mode;
-	private Employee employeeCriteria;
-	private Employee employeeEdit;
-	private Employee selectedMember;
-	private List<Employee> employeeList;
-	
-	private final EmployeeServiceMemory service = new EmployeeServiceMemory();
+    // Mode for CRUD operations
+    private String mode;
 
-	@PostConstruct
-	public void init() {
-		mode = "R";
-		employeeCriteria = new Employee();
-	}
+    // Criteria for searching employees
+    private Employee employeeCriteria;
 
-	public void searchBtnOnclick() {
-		employeeList = service.search(employeeCriteria);
-	}
+    // Employee object for editing
+    private Employee employeeEdit;
 
-	public void addBtnOnclick() {
-		mode = "C";
-		employeeEdit = new Employee();
-	}
+    // Selected member for editing or deletion
+    private Employee selectedMember;
 
-	public void editBtnOnclick(Employee p) {
-		mode = "U";
-		employeeEdit = p;
-	}
+    // List of employees
+    private List<Employee> employeeList;
 
-	public void saveBtnOnclick() {
-		service.add(employeeEdit);
-		mode = "U";
-	}
+    // Service for CRUD operations on employees
+    private final EmployeeServiceMemory service = new EmployeeServiceMemory();
 
-	public void updateBtnOnclick() {
-		service.update(employeeEdit);
-	}
+    /**
+     * Initializes the managed bean after construction.
+     */
+    @PostConstruct
+    public void init() {
+        mode = "R"; // Set default mode to "Read"
+        employeeCriteria = new Employee(); // Initialize criteria object
+    }
 
-	public void deleteBtnOnclick() {
-		service.delete(employeeEdit.getId());
-	}
+    /**
+     * Action method for searching employees based on criteria.
+     */
+    public void searchBtnOnclick() {
+        employeeList = service.search(employeeCriteria); // Perform search
+    }
 
-	public void backBtnOnclick() {
-		mode = "R";
-	}
+    /**
+     * Action method for adding a new employee.
+     */
+    public void addBtnOnclick() {
+        mode = "C"; // Set mode to "Create"
+        employeeEdit = new Employee(); // Initialize new employee object for editing
+    }
 
-	public String getMode() {
-		return mode;
-	}
+    /**
+     * Action method for editing an employee.
+     * 
+     * @param p The employee to be edited
+     */
+    public void editBtnOnclick(Employee p) {
+        mode = "U";
+        employeeEdit = p;
+    }
+    /**
+     * Action method for saving a new employee.
+     */
+    public void saveBtnOnclick() {
+        if (!isDuplicate(employeeEdit)) { // Check for duplicate employees
+            service.add(employeeEdit); // Add new employee
+            mode = "U"; // Switch mode to "Update"
+        } else {
+            // Display error message for duplicate employee
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This first name and last name already exist."));
+        }
+    }
 
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
+    /**
+     * Action method for updating an existing employee.
+     */
+    public void updateBtnOnclick() {
+        service.update(employeeEdit);
+    }
 
-	public Employee getEmployeeCriteria() {
-		return employeeCriteria;
-	}
+    /**
+     * Action method for deleting an existing employee.
+     */
+    public void deleteBtnOnclick() {
+        service.delete(employeeEdit.getId()); // Delete employee
+    }
 
-	public void setEmployeeCriteria(Employee employeeCriteria) {
-		this.employeeCriteria = employeeCriteria;
-	}
+    /**
+     * Action method for navigating back from editing.
+     */
+    public void backBtnOnclick() {
+        mode = "R"; // Switch mode back to "Read"
+    }
 
-	public Employee getEmployeeEdit() {
-		return employeeEdit;
-	}
+    // Getters and setters
 
-	public void setEmployeeEdit(Employee employeeEdit) {
-		this.employeeEdit = employeeEdit;
-	}
+    public String getMode() {
+        return mode;
+    }
 
-	public Employee getSelectedMember() {
-		return selectedMember;
-	}
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
-	public void setSelectedMember(Employee selectedMember) {
-		this.selectedMember = selectedMember;
-	}
+    public Employee getEmployeeCriteria() {
+        return employeeCriteria;
+    }
 
-	public List<Employee> getEmployeeList() {
-		return employeeList;
-	}
+    public void setEmployeeCriteria(Employee employeeCriteria) {
+        this.employeeCriteria = employeeCriteria;
+    }
 
-	public void setEmployeeList(List<Employee> employeeList) {
-		this.employeeList = employeeList;
-	}
+    public Employee getEmployeeEdit() {
+        return employeeEdit;
+    }
 
-	public void onRowSelect(SelectEvent event) {
-		// ดึงข้อมูลจากแถวที่ถูกเลือก
-		selectedMember = (Employee) event.getObject();
-		// เรียกใช้เมทอดที่ต้องการเมื่อแถวถูกเลือก
-		editBtnOnclick(selectedMember);
-	}
+    public void setEmployeeEdit(Employee employeeEdit) {
+        this.employeeEdit = employeeEdit;
+    }
 
+    public Employee getSelectedMember() {
+        return selectedMember;
+    }
+
+    public void setSelectedMember(Employee selectedMember) {
+        this.selectedMember = selectedMember;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    /**
+     * Checks if the given employee is a duplicate based on first name and last
+     * name.
+     * 
+     * @param employee The employee to check
+     * @return True if a duplicate is found, false otherwise
+     */
+    private boolean isDuplicate(Employee employee) {
+        List<Employee> existingEmployees = service.search(employee); // Search for existing employees with same criteria
+        // Check if any existing employee has same first name and last name
+        return existingEmployees.stream().anyMatch(e -> e.getFirstName().equals(employee.getFirstName())
+                && e.getLastName().equals(employee.getLastName()));
+    }
 }

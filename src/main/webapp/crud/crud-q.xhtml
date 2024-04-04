@@ -22,9 +22,9 @@
 
 		<p:commandButton id="searchBtn" value="Search" update="@form"
 			action="#{crudBean.searchBtnOnclick}" />
-		<p:commandButton id="addPageBtn" value="Add" icon="pi pi-plus"
-			update="@form" action="#{crudBean.addBtnOnclick}"
-			styleClass="ui-button-success" />
+		<p:commandButton id="addPageBtn" value="Add" icon="pi pi-check"
+			styleClass="ui-priority-primary ui-button-success" update="@form"
+			action="#{crudBean.addBtnOnclick}" />
 
 		<p:dataTable value="#{crudBean.employeeList}" var="m">
 			<p:ajax event="rowSelect" listener="#{crudBean.onRowSelect}"
