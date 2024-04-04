@@ -41,8 +41,7 @@
 				<!--		<p:outputLabel value="#{pfBean.person.contactPreference}" />-->
 				<!--		<br/>-->
 
-				<h:panelGroup
-					rendered="#{pfBean.person.contactPreference.equals('phone')}">
+				<h:panelGroup rendered="#{pfBean.person.contactPreference.equals('phone')}">
 					<p:outputLabel value="Phone:" />
 					<br />
 					<p:inputText value="#{pfBean.person.phoneNumber}" />
