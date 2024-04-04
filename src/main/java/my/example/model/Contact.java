@@ -2,6 +2,8 @@ package my.example.model;
 
 import java.io.Serializable;
 
+// model Contact 
+
 public class Contact implements Serializable {
     
     private static final long serialVersionUID = 1L;

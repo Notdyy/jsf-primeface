@@ -35,7 +35,7 @@ public class CrudBean implements Serializable {
     // List of employees
     private List<Employee> employeeList;
 
-    // Service for CRUD operations on employees
+    /// Service for CRUD operations on employees
     private final EmployeeServiceMemory service = new EmployeeServiceMemory();
 
     /**

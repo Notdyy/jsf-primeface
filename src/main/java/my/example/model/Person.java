@@ -1,4 +1,7 @@
 package my.example.model;
+
+// model Person
+
 import java.io.Serializable;
 import java.util.UUID;
 

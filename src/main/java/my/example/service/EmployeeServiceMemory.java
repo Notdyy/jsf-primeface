@@ -11,7 +11,7 @@ public class EmployeeServiceMemory  {
 
 	public static HashMap<String, Employee> employeeMap = new HashMap<String, Employee>();
 
-	// add(Employee employee): เพิ่มข้อมูลพนักงานใหม่เข้าสู่ระบบ
+	// add(Employee employee): เพิ่มข้อมูลพนักงานใหม่เข้าสู่ระบบ //
 	public void add(Employee employee) {
 		employeeMap.put(employee.getId(), employee);
 	}

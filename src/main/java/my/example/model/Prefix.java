@@ -1,5 +1,7 @@
 package my.example.model;
 
+//model Prefix
+
 import java.io.Serializable;
 
 public class Prefix implements Serializable {

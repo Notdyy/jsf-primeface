@@ -32,7 +32,7 @@ public class TextResultServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// do nothing
+		// do nothing  //
 	}
 	
 	private static final long serialVersionUID = 1L;

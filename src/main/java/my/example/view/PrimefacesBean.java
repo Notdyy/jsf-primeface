@@ -22,7 +22,7 @@ public class PrimefacesBean implements Serializable {
 
 	private String fullName;
 
-	// This method will be called when the bean is created
+	// This method will be called when the bean is created  //
 	public void init() {
 		nameService = new NameService(); // Initialize nameService
 	}
