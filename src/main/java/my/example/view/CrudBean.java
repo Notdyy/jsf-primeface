@@ -44,7 +44,7 @@ public class CrudBean implements Serializable {
     @PostConstruct
     public void init() {
         mode = "R"; // Set default mode to "Read"
-        employeeCriteria = new Employee(); // Initialize criteria object
+        employeeCriteria = new Employee(); // Initialize criteria object.
     }
 
     /**
