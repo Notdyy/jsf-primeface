@@ -5,7 +5,7 @@
 	version="3.0">
 
 	<display-name>jsf-primefaces</display-name>
-	
+
 	<!-- Welcome page -->
 	<welcome-file-list>
 		<welcome-file>Lab_JSF_Primefaces.xhtml</welcome-file>
@@ -25,6 +25,6 @@
 		<url-pattern>*.faces</url-pattern>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 </web-app>

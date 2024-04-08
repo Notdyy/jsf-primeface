@@ -1,8 +1,13 @@
 package my.example.view;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,100 +17,114 @@ import javax.faces.context.FacesContext;
 import my.example.model.Employee;
 import my.example.service.EmployeeServiceMemory;
 
-/**
- * Managed bean for CRUD operations on Employee entities.
- */
 @ManagedBean
 @ViewScoped
 public class CrudBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // Mode for CRUD operations
     private String mode;
-
-    // Criteria for searching employees
     private Employee employeeCriteria;
-
-    // Employee object for editing
     private Employee employeeEdit;
-
-    // Selected member for editing or deletion
     private Employee selectedMember;
-
-    // List of employees
     private List<Employee> employeeList;
 
-    /// Service for CRUD operations on employees
-    private final EmployeeServiceMemory service = new EmployeeServiceMemory();
+    private EmployeeServiceMemory service = new EmployeeServiceMemory();
 
-    /**
-     * Initializes the managed bean after construction.
-     */
     @PostConstruct
     public void init() {
-        mode = "R"; // Set default mode to "Read"
-        employeeCriteria = new Employee(); // Initialize criteria object
+        mode = "R";
+        employeeCriteria = new Employee();
+    }
+    
+    public String calculateAge(Date birthdate) {
+        if (birthdate != null) {
+            try {
+                // Define formatter for parsing the date string
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                LocalDate birthdateDate = LocalDate.parse(formatter.format(birthdate), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                Period period = Period.between(birthdateDate, LocalDate.now());
+                
+                // เพิ่มเงื่อนไขตรวจสอบว่าอายุมากกว่า 2 ปีหรือไม่
+                if (period.getYears() >= 2) {
+                    return period.getYears() + " years " + period.getMonths() + " months " + "And " + period.getDays() + " days";
+                } else {
+                    return "Age must be greater than 2 years";
+                }
+            } catch (DateTimeParseException e) {
+                // Handle the DateTimeParseException here
+                e.printStackTrace();
+                return "";
+            }
+        } else {
+            return "";
+        }
     }
 
-    /**
-     * Action method for searching employees based on criteria.
-     */
+    public void resetBtnOnclick() {
+    	employeeCriteria = new Employee();
+        resetMode();
+    }
+
+    private void resetMode() {
+        if (mode.equals("C")) {
+            employeeEdit = new Employee();
+        } else if (mode.equals("U")) {
+            if (selectedMember != null) { // ตรวจสอบว่า selectedMember ไม่เป็น null ก่อนที่จะใช้
+                employeeList = service.search(employeeEdit);
+            }
+        }
+    }
+
+
+    
     public void searchBtnOnclick() {
-        employeeList = service.search(employeeCriteria); // Perform search
+        employeeList = service.search(employeeCriteria);
     }
 
-    /**
-     * Action method for adding a new employee.
-     */
     public void addBtnOnclick() {
-        mode = "C"; // Set mode to "Create"
-        employeeEdit = new Employee(); // Initialize new employee object for editing
+        mode = "C";
+        resetMode();
     }
 
-    /**
-     * Action method for editing an employee.
-     * 
-     * @param p The employee to be edited
-     */
     public void editBtnOnclick(Employee p) {
         mode = "U";
         employeeEdit = p;
     }
-    /**
-     * Action method for saving a new employee.
-     */
+
     public void saveBtnOnclick() {
-        if (!isDuplicate(employeeEdit)) { // Check for duplicate employees
-            service.add(employeeEdit); // Add new employee
-            mode = "U"; // Switch mode to "Update"
+        String ageMessage = calculateAge(employeeEdit.getBirthdate());
+        if (ageMessage.startsWith("Age must be greater than 2 years")) {
+            // อายุไม่ถึง 2 ปี ไม่สามารถเพิ่มข้อมูลได้
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Age must be greater than or equal to 2 years to add data.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         } else {
-            // Display error message for duplicate employee
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This first name and last name already exist."));
+            // อายุมากกว่าหรือเท่ากับ 2 ปี สามารถเพิ่มข้อมูลได้
+            service.add(employeeEdit);
+            mode = "U";
         }
     }
 
-    /**
-     * Action method for updating an existing employee.
-     */
     public void updateBtnOnclick() {
-        service.update(employeeEdit);
+        String ageMessage = calculateAge(employeeEdit.getBirthdate());
+        if (ageMessage.startsWith("Age must be greater than 2 years")) {
+            // อายุไม่ถึง 2 ปี ไม่สามารถเพิ่มข้อมูลได้
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Age must be greater than or equal to 2 years to add data.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            // อายุมากกว่าหรือเท่ากับ 2 ปี สามารถเพิ่มข้อมูลได้
+        	service.update(employeeEdit);
+        }
     }
 
-    /**
-     * Action method for deleting an existing employee.
-     */
+
+
     public void deleteBtnOnclick() {
-        service.delete(employeeEdit.getId()); // Delete employee
+        service.delete(employeeEdit.getId());
     }
 
-    /**
-     * Action method for navigating back from editing.
-     */
     public void backBtnOnclick() {
-        mode = "R"; // Switch mode back to "Read"
+        mode = "R";
     }
-
-    // Getters and setters
 
     public String getMode() {
         return mode;
@@ -145,19 +164,5 @@ public class CrudBean implements Serializable {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
-    }
-
-    /**
-     * Checks if the given employee is a duplicate based on first name and last
-     * name.
-     * 
-     * @param employee The employee to check
-     * @return True if a duplicate is found, false otherwise
-     */
-    private boolean isDuplicate(Employee employee) {
-        List<Employee> existingEmployees = service.search(employee); // Search for existing employees with same criteria
-        // Check if any existing employee has same first name and last name
-        return existingEmployees.stream().anyMatch(e -> e.getFirstName().equals(employee.getFirstName())
-                && e.getLastName().equals(employee.getLastName()));
     }
 }
