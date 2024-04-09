@@ -9,17 +9,18 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<p:panel rendered="#{crudBean.mode != 'R'}">
+		<p:messages id="messages" showDetail="true" closable="true" />
 		<p:panelGrid columns="3">
 			<p:outputLabel for="firstname_e" value="First Name" />
 			<p:inputText id="firstname_e"
 				value="#{crudBean.employeeEdit.firstName}" autocomplete="off"
-				required="true" requiredMessage="Please enter First Name" />
+				required="true" requiredMessage="Fist Name:Validation Error: Value is required" />
 			<p:message for="firstname_e" />
 
 			<p:outputLabel for="lastname_e" value="Last Name" />
 			<p:inputText id="lastname_e"
 				value="#{crudBean.employeeEdit.lastName}" autocomplete="off"
-				required="true" requiredMessage="Please enter Last Name" />
+				required="true" requiredMessage="Last Name:Validation Error: Value is required" />
 			<p:message for="lastname_e" />
 
 			<p:outputLabel for="birthdate" value="Birth Date" />
@@ -32,12 +33,12 @@
 				value="#{crudBean.calculateAge(crudBean.employeeEdit.birthdate)}"
 				pattern="dd-MM-yyyy" showOn="button" />
 		</p:panelGrid>
-
+		<p:panel columns="2" styleClass="p-field p-col-12 p-md-4">
 		<div style="display: flex; justify-content: space-between;">
 			<div>
-				<p:commandButton id="saveBtn" value="Create" update="@form"
-					action="#{crudBean.saveBtnOnclick}"
-					rendered="#{crudBean.mode == 'C'}" icon="pi pi-save" />
+				<p:commandButton id="saveBtn" value="Create" update="@form messages"
+    action="#{crudBean.saveBtnOnclick}" rendered="#{crudBean.mode == 'C'}" icon="pi pi-save" />
+
 				<p:commandButton id="updateBtn" value="Update" update="@form"
 					action="#{crudBean.updateBtnOnclick}" icon="pi pi-user-edit"
 					disabled="#{crudBean.mode != 'U'}" />
@@ -62,6 +63,7 @@
 					immediate="true" />
 			</div>
 		</div>
+		</p:panel>
 	</p:panel>
 
 </ui:composition>

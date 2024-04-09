@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -46,7 +46,7 @@ public class CrudBean implements Serializable {
                 
                 // เพิ่มเงื่อนไขตรวจสอบว่าอายุมากกว่า 2 ปีหรือไม่
                 if (period.getYears() >= 2) {
-                    return period.getYears() + " years " + period.getMonths() + " months " + "And " + period.getDays() + " days";
+                    return period.getYears() + " years " + period.getMonths() + " months " + "and " + period.getDays() + " days";
                 } else {
                     return "Age must be greater than 2 years";
                 }
@@ -70,7 +70,7 @@ public class CrudBean implements Serializable {
             employeeEdit = new Employee();
         } else if (mode.equals("U")) {
             if (selectedMember != null) { // ตรวจสอบว่า selectedMember ไม่เป็น null ก่อนที่จะใช้
-                employeeList = service.search(employeeEdit);
+                employeeList = service.search(selectedMember);
             }
         }
     }
@@ -96,11 +96,12 @@ public class CrudBean implements Serializable {
         if (ageMessage.startsWith("Age must be greater than 2 years")) {
             // อายุไม่ถึง 2 ปี ไม่สามารถเพิ่มข้อมูลได้
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Age must be greater than or equal to 2 years to add data.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            FacesContext.getCurrentInstance().addMessage("form:messages", message);
         } else {
-            // อายุมากกว่าหรือเท่ากับ 2 ปี สามารถเพิ่มข้อมูลได้
             service.add(employeeEdit);
             mode = "U";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "บันทึกข้อมูลเรียบร้อย");
+            FacesContext.getCurrentInstance().addMessage("form:messages", message);
         }
     }
 
@@ -109,12 +110,15 @@ public class CrudBean implements Serializable {
         if (ageMessage.startsWith("Age must be greater than 2 years")) {
             // อายุไม่ถึง 2 ปี ไม่สามารถเพิ่มข้อมูลได้
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Age must be greater than or equal to 2 years to add data.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            FacesContext.getCurrentInstance().addMessage("form:messages", message);
         } else {
             // อายุมากกว่าหรือเท่ากับ 2 ปี สามารถเพิ่มข้อมูลได้
-        	service.update(employeeEdit);
+            service.update(employeeEdit);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "แก้ไขข้อมูลเรียบร้อย");
+            FacesContext.getCurrentInstance().addMessage("form:messages", message);
         }
     }
+
 
 
 
