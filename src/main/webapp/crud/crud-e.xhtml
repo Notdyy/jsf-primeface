@@ -41,7 +41,7 @@
 
 				<p:commandButton id="updateBtn" value="Update" update="@form"
 					action="#{crudBean.updateBtnOnclick}" icon="pi pi-user-edit"
-					disabled="#{crudBean.mode != 'U'}" />
+					disabled="#{crudBean.mode != 'U'}" rendered="#{crudBean.mode == 'U'}" />
 				<p:commandButton id="deleteBtn" value="Delete" update="@form"
 					action="#{crudBean.deleteBtnOnclick}" icon="pi pi-trash"
 					styleClass="p-button-danger" rendered="#{crudBean.mode == 'U'}" />

@@ -9,56 +9,36 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<p:panel rendered="#{crudBean.mode == 'R'}">
-		<p:panelGrid columns="2">
-			<p:outputLabel for="firstname" value="First Name" />
-			<p:inputText id="firstname"
-				value="#{crudBean.employeeCriteria.firstName}" autocomplete="off"
-				placeholder="" />
+    <p:panelGrid columns="2">
+        <p:outputLabel for="firstname" value="First Name" />
+        <p:inputText id="firstname" value="#{crudBean.employeeCriteria.firstName}" autocomplete="off" placeholder="" />
 
-			<p:outputLabel for="lastname" value="Last Name" />
-			<p:inputText id="lastname"
-				value="#{crudBean.employeeCriteria.lastName}" autocomplete="off" />
-		</p:panelGrid>
-		<p:panel columns="2" styleClass="p-field p-col-12 p-md-4">
-			<div style="display: flex; justify-content: space-between;">
-				<p:commandButton id="searchBtn" value="Search" update="@form"
-					icon="pi pi-search" action="#{crudBean.searchBtnOnclick}"
-					styleClass="p-button-primary" />
-				<div>
-					<p:commandButton id="resetBtn" value="Reset" icon="pi pi-refresh"
-						styleClass="ui-button-success" update="@form"
-						action="#{crudBean.resetBtnOnclick}" />
+        <p:outputLabel for="lastname" value="Last Name" />
+        <p:inputText id="lastname" value="#{crudBean.employeeCriteria.lastName}" autocomplete="off" />
+    </p:panelGrid>
+    <p:panel columns="2" styleClass="p-field p-col-12 p-md-4">
+        <div style="display: flex; justify-content: space-between;">
+            <p:commandButton id="searchBtn" value="Search" update="@form" icon="pi pi-search" action="#{crudBean.searchBtnOnclick}" styleClass="p-button-primary" immediate="" />
+            <div>
+                <p:commandButton id="resetBtn" value="Reset" icon="pi pi-refresh" styleClass="ui-button-success" update="@form" action="#{crudBean.resetBtnOnclick}" />
+                <p:commandButton id="addBtn" value="Add" icon="pi pi-plus" styleClass="ui-button-success" update="@form" action="#{crudBean.addBtnOnclick}" />
+            </div>
+        </div>
+    </p:panel>
 
-					<p:commandButton id="addBtn" value="Add" icon="pi pi-plus"
-						styleClass="ui-button-success" update="@form"
-						action="#{crudBean.addBtnOnclick}" />
-				</div>
-			</div>
-		</p:panel>
+    <p:dataTable value="#{crudBean.employeeList}" var="m" selection="#{crudBean.selectedMember}">
+        <p:ajax event="rowSelect" update="@form" />
+        <p:column headerText="ID">#{m.id}</p:column>
+        <p:column headerText="First">#{m.firstName}</p:column>
+        <p:column headerText="Last">#{m.lastName}</p:column>
+        <p:column headerText="Age">#{crudBean.calculateAge(m.birthdate)}</p:column>
+        <p:column headerText="Action">
+            <p:commandButton id="editBtn" value="Edit" update="@form">
+                <f:setPropertyActionListener target="#{crudBean.selectedMember}" value="#{m}" />
+                <p:ajax event="click" update="@form" listener="#{crudBean.editBtnOnclick(m)}" />
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+</p:panel>
 
-		<p:dataTable value="#{crudBean.employeeList}" var="m" selection="#{crudBean.selectedMember}">
-   		 <p:ajax event="rowSelect" update="@form" />
-				update="@form" />
-			<p:column headerText="ID">
-				#{m.id}
-			</p:column>
-			<p:column headerText="First">
-				#{m.firstName}
-			</p:column>
-
-			<p:column headerText="Last">
-				#{m.lastName}
-			</p:column>
-
-			<p:column headerText="Age">
-				#{crudBean.calculateAge(m.birthdate)}
-			</p:column>
-
-			<p:column headerText="Action">
-				<p:commandButton id="editBtn" value="Edit" update="@form"
-					action="#{crudBean.editBtnOnclick(m)}" />
-
-			</p:column>
-		</p:dataTable>
-	</p:panel>
 </ui:composition>
