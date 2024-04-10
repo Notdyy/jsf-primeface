@@ -40,8 +40,8 @@ public class EmployeeServiceMemory  {
 			return 0;
 		}
 	}
-	public Employee findById(String id) {
-	    return employeeMap.get(id);
+	public Employee getById(String id) {
+	    return employeeMap.getOrDefault(id, null);
 	}
 
 

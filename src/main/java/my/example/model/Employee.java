@@ -48,4 +48,14 @@ public class Employee implements Serializable {
     public void setBirthdate(Date birthdate) { // เปลี่ยน signature ของเมทอด setBirthdate
         this.birthdate = birthdate;
     }
+ // Clone method
+    @Override
+    public Employee clone() {
+        try {
+            return (Employee) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // This should never happen since Employee implements Cloneable
+            throw new InternalError(e);
+        }
+    }
 }

@@ -13,20 +13,20 @@
 		<p:panelGrid columns="3">
 			<p:outputLabel for="firstname_e" value="First Name" />
 			<p:inputText id="firstname_e"
-				value="#{crudBean.employeeEdit.firstName}" autocomplete="off"
-				required="true" requiredMessage="Fist Name:Validation Error: Value is required" />
+				value="#{crudBean.employeeEdit.firstName}" autocomplete="on"
+				required="true" />
 			<p:message for="firstname_e" />
 
 			<p:outputLabel for="lastname_e" value="Last Name" />
 			<p:inputText id="lastname_e"
-				value="#{crudBean.employeeEdit.lastName}" autocomplete="off"
-				required="true" requiredMessage="Last Name:Validation Error: Value is required" />
+				value="#{crudBean.employeeEdit.lastName}" autocomplete="on"
+				required="true" />
 			<p:message for="lastname_e" />
 
 			<p:outputLabel for="birthdate" value="Birth Date" />
 			<p:calendar id="birthdate" value="#{crudBean.employeeEdit.birthdate}"
 				pattern="dd/MM/yyyy" showOn="button" locale="de" navigator="true"
-				required="true" requiredMessage="Please enter birthdate" />
+				required="true" />
 			<p:message for="birthdate" />
 			<p:outputLabel for="birthdate" value="Age" />
 			<p:outputLabel
@@ -48,14 +48,14 @@
 			</div>
 
 			<div>
-			<p:commandButton id="resetBtnCreate" value="Reset"
+			<p:commandButton id="resetBtnCreate" value="Reset Create"
 					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
-					action="#{crudBean.resetBtnOnclick}"
-					rendered="#{crudBean.mode == 'C'}" />
+					action="#{crudBean.resetBtnOnclick}" process="@this" immediate="true"
+					rendered="#{crudBean.mode == 'C'}"/>
 
-				<p:commandButton id="resetBtnUpdate" value="Reset"
+				<p:commandButton id="resetBtnUpdate" value="Reset Update"
 					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
-					action="#{crudBean.resetBtnOnclick}"
+					action="#{crudBean.resetBtnOnclick}" process="@this" immediate="true"
 					rendered="#{crudBean.mode == 'U'}">
 				</p:commandButton>
 				<p:commandButton id="backPageBtn" value="Back" update="@form"
