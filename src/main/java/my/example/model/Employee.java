@@ -11,7 +11,7 @@ public class Employee implements Serializable {
     private String id;
     private String firstName;
     private String lastName;
-    private Date birthdate; // เปลี่ยนชนิดของ birthdate เป็น Date
+    private Date birthdate;
 
     public Employee() {
         id = UUID.randomUUID().toString();
@@ -48,7 +48,8 @@ public class Employee implements Serializable {
     public void setBirthdate(Date birthdate) { // เปลี่ยน signature ของเมทอด setBirthdate
         this.birthdate = birthdate;
     }
- // Clone method
+
+    // Clone method
     @Override
     public Employee clone() {
         try {

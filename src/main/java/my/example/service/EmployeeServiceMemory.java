@@ -41,8 +41,9 @@ public class EmployeeServiceMemory  {
 		}
 	}
 	public Employee getById(String id) {
-	    return employeeMap.getOrDefault(id, null);
+	    if (id != null) {
+	        return employeeMap.getOrDefault(id, null);
+	    }
+	    return null;
 	}
-
-
 }

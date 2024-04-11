@@ -9,6 +9,17 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<p:panel rendered="#{crudBean.mode != 'R'}">
+	<div class="card">
+    	<h:form>
+        	<p:breadCrumb>
+           		<p:menuitem value="Electronics" url="crud.xhtml"/>
+            	<p:menuitem value="Home" url="crud.xhtml" />
+            	<p:menuitem value="Create" immediate="true" rendered="#{crudBean.mode == 'C'}"/>
+            	<p:menuitem value="Create" immediate="true" rendered="#{crudBean.mode == 'U'}"/>
+            	<p:menuitem value="Update" immediate="true" rendered="#{crudBean.mode == 'U'}"/>
+        	</p:breadCrumb>
+    	</h:form>
+	</div>
 		<p:messages id="messages" showDetail="true" closable="true" />
 		<p:panelGrid columns="3">
 			<p:outputLabel for="firstname_e" value="First Name" />
@@ -48,10 +59,10 @@
 			</div>
 
 			<div>
-			<p:commandButton id="resetBtnCreate" value="Reset Create"
+				<p:commandButton id="resetBtnCreate" value="Reset Create"
 					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
 					action="#{crudBean.resetBtnOnclick}" process="@this" immediate="true"
-					rendered="#{crudBean.mode == 'C'}"/>
+					rendered="#{crudBean.mode == 'C'}" />
 
 				<p:commandButton id="resetBtnUpdate" value="Reset Update"
 					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
