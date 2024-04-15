@@ -9,32 +9,42 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<p:panel rendered="#{crudBean.mode != 'R'}">
-	<div class="card">
-    	<h:form>
-        	<p:breadCrumb>
-           		<p:menuitem value="Electronics" url="crud.xhtml"/>
-            	<p:menuitem value="Home" url="crud.xhtml" />
-            	<p:menuitem value="Create" immediate="true" rendered="#{crudBean.mode == 'C'}"/>
-            	<p:menuitem value="Create" immediate="true" rendered="#{crudBean.mode == 'U'}"/>
-            	<p:menuitem value="Update" immediate="true" rendered="#{crudBean.mode == 'U'}"/>
-        	</p:breadCrumb>
-    	</h:form>
-	</div>
+		<div class="card">
+			<h:form>
+				<p:breadCrumb>
+					<p:menuitem value="Electronics" url="crud.xhtml" />
+					<p:menuitem value="Home" url="crud.xhtml" />
+					<p:menuitem value="Create" immediate="true"
+						rendered="#{crudBean.mode == 'C'}" />
+					<p:menuitem value="Create" immediate="true"
+						rendered="#{crudBean.mode == 'U'}" />
+					<p:menuitem value="Update" immediate="true"
+						rendered="#{crudBean.mode == 'U'}" />
+				</p:breadCrumb>
+			</h:form>
+		</div>
 		<p:messages id="messages" showDetail="true" closable="true" />
+		
 		<p:panelGrid columns="3">
-			<p:outputLabel for="firstname_e" value="First Name" />
+			<p:outputLabel for="firstname_e" value="First Name">
+				<i class="fas fa-user-edit"></i>
+			</p:outputLabel>
 			<p:inputText id="firstname_e"
 				value="#{crudBean.employeeEdit.firstName}" autocomplete="on"
 				required="true" />
 			<p:message for="firstname_e" />
 
-			<p:outputLabel for="lastname_e" value="Last Name" />
+			<p:outputLabel for="lastname_e" value="Last Name">
+				<i class="fas fa-user-edit"></i>
+			</p:outputLabel>
 			<p:inputText id="lastname_e"
 				value="#{crudBean.employeeEdit.lastName}" autocomplete="on"
 				required="true" />
 			<p:message for="lastname_e" />
 
-			<p:outputLabel for="birthdate" value="Birth Date" />
+			<p:outputLabel for="birthdate" value="Birth Date">
+				<i class="fas fa-birthday-cake"></i>
+			</p:outputLabel>
 			<p:calendar id="birthdate" value="#{crudBean.employeeEdit.birthdate}"
 				pattern="dd/MM/yyyy" showOn="button" locale="de" navigator="true"
 				required="true" />
@@ -45,35 +55,37 @@
 				pattern="dd-MM-yyyy" showOn="button" />
 		</p:panelGrid>
 		<p:panel columns="2" styleClass="p-field p-col-12 p-md-4">
-		<div style="display: flex; justify-content: space-between;">
-			<div>
-				<p:commandButton id="saveBtn" value="Create" update="@form messages"
-    action="#{crudBean.saveBtnOnclick}" rendered="#{crudBean.mode == 'C'}" icon="pi pi-save" />
+			<div style="display: flex; justify-content: space-between;">
+				<div>
+					<p:commandButton id="saveBtn" value="Create"
+						update="@form messages" action="#{crudBean.saveBtnOnclick}"
+						rendered="#{crudBean.mode == 'C'}" icon="pi pi-save" styleClass="ui-button-success"/>
 
-				<p:commandButton id="updateBtn" value="Update" update="@form"
-					action="#{crudBean.updateBtnOnclick}" icon="pi pi-user-edit"
-					disabled="#{crudBean.mode != 'U'}" rendered="#{crudBean.mode == 'U'}" />
-				<p:commandButton id="deleteBtn" value="Delete" update="@form"
-					action="#{crudBean.deleteBtnOnclick}" icon="pi pi-trash"
-					styleClass="p-button-danger" rendered="#{crudBean.mode == 'U'}" />
+					<p:commandButton id="updateBtn" value="Update" update="@form"
+						action="#{crudBean.updateBtnOnclick}" icon="pi pi-user-edit"
+						disabled="#{crudBean.mode != 'U'}"
+						rendered="#{crudBean.mode == 'U'}" />
+					<p:commandButton id="deleteBtn" value="Delete" update="@form"
+						action="#{crudBean.deleteBtnOnclick}" icon="pi pi-trash"
+						styleClass="ui-button-danger" rendered="#{crudBean.mode == 'U'}" />
+				</div>
+
+				<div>
+					<p:commandButton id="resetBtnCreate" value="Reset"
+						icon="pi pi-refresh" styleClass="ui-button-info" update="@form"
+						action="#{crudBean.resetBtnOnclick}" process="@this"
+						immediate="true" rendered="#{crudBean.mode == 'C'}" />
+
+					<p:commandButton id="resetBtnUpdate" value="Reset"
+						icon="pi pi-refresh" styleClass="ui-button-info" update="@form"
+						action="#{crudBean.resetBtnOnclick}" process="@this"
+						immediate="true" rendered="#{crudBean.mode == 'U'}">
+					</p:commandButton>
+					<p:commandButton id="backPageBtn" value="Go Back" update="@form"
+						action="#{crudBean.backBtnOnclick}" icon="pi pi-chevron-left"
+						immediate="true" />
+				</div>
 			</div>
-
-			<div>
-				<p:commandButton id="resetBtnCreate" value="Reset Create"
-					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
-					action="#{crudBean.resetBtnOnclick}" process="@this" immediate="true"
-					rendered="#{crudBean.mode == 'C'}" />
-
-				<p:commandButton id="resetBtnUpdate" value="Reset Update"
-					icon="pi pi-refresh" styleClass="ui-button-success" update="@form"
-					action="#{crudBean.resetBtnOnclick}" process="@this" immediate="true"
-					rendered="#{crudBean.mode == 'U'}">
-				</p:commandButton>
-				<p:commandButton id="backPageBtn" value="Back" update="@form"
-					action="#{crudBean.backBtnOnclick}" icon="pi pi-chevron-left"
-					immediate="true" />
-			</div>
-		</div>
 		</p:panel>
 	</p:panel>
 

@@ -10,6 +10,8 @@ import my.example.model.Employee;
 public class EmployeeServiceMemory  {
 
 	public static HashMap<String, Employee> employeeMap = new HashMap<String, Employee>();
+	
+	
 
 	public void add(Employee employee) {
 		employeeMap.put(employee.getId(), employee);
