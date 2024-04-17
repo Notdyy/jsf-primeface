@@ -46,13 +46,13 @@
     <p:column headerText="First" sortBy="#{m.firstName}" filterBy="#{m.firstName}">#{m.firstName}</p:column>
     <p:column headerText="Last" sortBy="#{m.lastName}" filterBy="#{m.lastName}">#{m.lastName}</p:column>
     <p:column headerText="Age" sortBy="#{m.birthdate}" filterBy="#{m.birthdate}">#{crudBean.calculateAge(m.birthdate)}</p:column>
-    <p:column headerText="Action">
-        <p:commandButton id="editBtn" value="Edit" update="@form">
-            <f:setPropertyActionListener target="#{crudBean.selectedMember}" value="#{m}" />
-            <p:ajax event="click" update="@form" listener="#{crudBean.editBtnOnclick(m)}" oncomplete="PF('dataTableWidgetVar').filter()" />
-        </p:commandButton>
-    </p:column>
-</p:dataTable>
+    	<p:column headerText="Action">
+        	<p:commandButton id="editBtn" value="Edit" update="@form">
+            	<f:setPropertyActionListener target="#{crudBean.selectedMember}" value="#{m}" />
+            	<p:ajax event="click" update="@form" listener="#{crudBean.editBtnOnclick(m)}"/>
+        	</p:commandButton>
+    	</p:column>
+	</p:dataTable>
 
 </p:panel>
 
