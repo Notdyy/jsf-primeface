@@ -33,6 +33,8 @@ public class CrudBean implements Serializable {
     public CrudBean() {
         mode = "R";
         employeeCriteria = new Employee();
+        // ข้อมูลจำลอง
+        service.mock();
     }
 
     // Getter and Setter methods

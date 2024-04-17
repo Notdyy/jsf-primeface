@@ -6,77 +6,90 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Primefaces 7.0 Form</title>
+	<title>Primefaces 13.0.7 Form</title>
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@latest/primeflex.css" />
 </h:head>
 <h:body>
 	<h:form>
-		<h:panelGrid>
-			<p:outputLabel value="Title" />
-			<p:selectOneMenu value="#{pfBean.person.title}">
-				<f:selectItem itemLabel="Mr." itemValue="Mr." />
-				<f:selectItem itemLabel="Mrs." itemValue="Mrs." />
-				<f:selectItem itemLabel="Miss" itemValue="Miss" />
-				<f:selectItem itemLabel="Ms." itemValue="Ms." />
-			</p:selectOneMenu>
-			<p:outputLabel id="yyyy" value="First Name :" />
-			<p:inputText value="#{pfBean.person.firstName}" />
-			<p:outputLabel value="Last Name :" />
-			<p:inputText value="#{pfBean.person.lastName}" />
+		<div class="flex overflow-hidden">
+			<div class="flex-none flex align-items-center justify-content-center  font-bold m-2 px-5 py-3 border-round">
 
-			<p:outputLabel value="Sex" />
-			<p:selectOneButton value="#{pfBean.person.sex}">
-				<f:selectItem itemLabel="Male" itemValue="M" />
-				<f:selectItem itemLabel="Female" itemValue="F" />
-			</p:selectOneButton>
+			</div>
+			<div class="flex-grow-1 flex align-items-center justify-content-center mt-5 m-2 px-5 py-3 border-round">
+				<div class="p-col border-1 border-solid surface-border border-round">
+					<h:panelGrid>
+						<p:outputLabel value="Title" />
+						<p:selectOneMenu value="#{pfBean.person.title}">
+							<f:selectItem itemLabel="Mr." itemValue="Mr." />
+							<f:selectItem itemLabel="Mrs." itemValue="Mrs." />
+							<f:selectItem itemLabel="Miss" itemValue="Miss" />
+							<f:selectItem itemLabel="Ms." itemValue="Ms." />
+						</p:selectOneMenu>
+						<p:outputLabel id="yyyy" value="First Name :" />
+						<p:inputText value="#{pfBean.person.firstName}" />
+						<p:outputLabel value="Last Name :" />
+						<p:inputText value="#{pfBean.person.lastName}" />
 
-			<p:selectOneRadio id="console"
-				value="#{pfBean.person.contactPreference}" unselectable="true">
-				<f:selectItem itemLabel="Phone" itemValue="phone" />
-				<f:selectItem itemLabel="e-Mail" itemValue="email" />
-				<p:ajax listener="#{pfBean.contactPreferenceChanged}" event="change"
-					update="contactPanel" />
-			</p:selectOneRadio>
+						<p:outputLabel value="Sex" />
+						<p:selectOneButton value="#{pfBean.person.sex}">
+							<f:selectItem itemLabel="Male" itemValue="M" />
+							<f:selectItem itemLabel="Female" itemValue="F" />
+						</p:selectOneButton>
 
-			<h:panelGroup id="contactPanel">
-				<!--		<p:outputLabel value="#{pfBean.person.contactPreference}" />-->
-				<!--		<br/>-->
+						<p:selectOneRadio id="console"
+							value="#{pfBean.person.contactPreference}" unselectable="true">
+							<f:selectItem itemLabel="Phone" itemValue="phone" />
+							<f:selectItem itemLabel="e-Mail" itemValue="email" />
+							<p:ajax listener="#{pfBean.contactPreferenceChanged}"
+								event="change" update="contactPanel" />
+						</p:selectOneRadio>
 
-				<h:panelGroup rendered="#{pfBean.person.contactPreference == 'phone'}">
-					<p:outputLabel value="Phone:" />
-					<br />
-					<p:inputText value="#{pfBean.person.phoneNumber}" />
-				</h:panelGroup>
+						<h:panelGroup id="contactPanel">
+							<!--		<p:outputLabel value="#{pfBean.person.contactPreference}" />-->
+							<!--		<br/>-->
 
-				<h:panelGroup
-					rendered="#{pfBean.person.contactPreference == 'email'}">
-					<p:outputLabel value="Email:" />
-					<br />
-					<p:inputText value="#{pfBean.person.email}" />
-				</h:panelGroup>
-			</h:panelGroup>
+							<h:panelGroup
+								rendered="#{pfBean.person.contactPreference == 'phone'}">
+								<p:outputLabel value="Phone:" />
+								<br />
+								<p:inputText value="#{pfBean.person.phoneNumber}" />
+							</h:panelGroup>
 
-
-			<p:commandButton value="Submit"
-				action="#{pfBean.submitButtonOnClick}" process="@form"
-				update="@form" />
-
-			<br />
-			<p:outputLabel id="xxxx" value="FullName :#{pfBean.fullName}" />
-			<br />
-			<p:outputLabel value="Sex: #{pfBean.personSexFull()}" />
-			<br />
-			<p:outputLabel
-				value="Contact Preference: #{pfBean.getPerson().getContactPreference()}" />
-			<br />
-			<p:outputLabel value="Phone: #{pfBean.getPerson().getPhoneNumber()}"
-				rendered="#{pfBean.getPerson().contactPreference.equals('phone')}" />
-			<br />
-			<p:outputLabel value="Email: #{pfBean.getPerson().getEmail()}"
-				rendered="#{pfBean.getPerson().contactPreference.equals('email')}" />
+							<h:panelGroup
+								rendered="#{pfBean.person.contactPreference == 'email'}">
+								<p:outputLabel value="Email:" />
+								<br />
+								<p:inputText value="#{pfBean.person.email}" />
+							</h:panelGroup>
+						</h:panelGroup>
 
 
+						<p:commandButton value="Submit"
+							action="#{pfBean.submitButtonOnClick}" process="@form"
+							update="@form" />
 
-		</h:panelGrid>
+						<br />
+						<p:outputLabel id="xxxx" value="FullName :#{pfBean.fullName}" />
+						<br />
+						<p:outputLabel value="Sex: #{pfBean.personSexFull()}" />
+						<br />
+						<p:outputLabel
+							value="Contact Preference: #{pfBean.getPerson().getContactPreference()}" />
+						<br />
+						<p:outputLabel
+							value="Phone: #{pfBean.getPerson().getPhoneNumber()}"
+							rendered="#{pfBean.getPerson().contactPreference.equals('phone')}" />
+						<br />
+						<p:outputLabel value="Email: #{pfBean.getPerson().getEmail()}"
+							rendered="#{pfBean.getPerson().contactPreference.equals('email')}" />
+				</h:panelGrid>
+				</div>
+			</div>
+			<div class="flex-none flex align-items-center justify-content-center  font-bold m-2 px-5 py-3 border-round">
+
+			</div>
+		</div>
 	</h:form>
 	<script type="text/javascript">
     // Call the init() method of the bean when the page is loaded
