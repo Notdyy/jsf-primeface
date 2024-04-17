@@ -174,7 +174,7 @@ public class CrudBean implements Serializable {
 
     private void resetFormToSelectedEmployee() {
     	if (selectedMember != null) { // ตรวจสอบว่า selectedMember ไม่เป็น null
-            employeeEdit = selectedMember.clone(); // ตั้งค่า employeeEdit เป็น selectedMember
+            employeeEdit = selectedMember.clone(); //ตั้งค่า employeeEdit เป็น selectedMember
         }
     }
 

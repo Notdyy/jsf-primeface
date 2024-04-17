@@ -45,7 +45,7 @@ public class Employee implements Serializable {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) { // เปลี่ยน signature ของเมทอด setBirthdate
+    public void setBirthdate(Date birthdate) { //เปลี่ยน signature ของเมทอด setBirthdate
         this.birthdate = birthdate;
     }
 
