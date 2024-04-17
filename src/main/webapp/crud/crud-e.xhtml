@@ -24,7 +24,7 @@
 			</h:form>
 		</div>
 		<p:messages id="messages" showDetail="true" closable="true" />
-		
+
 		<p:panelGrid columns="3">
 			<p:outputLabel for="firstname_e" value="First Name">
 				<i class="fas fa-user-edit"></i>
@@ -59,7 +59,8 @@
 				<div>
 					<p:commandButton id="saveBtn" value="Create"
 						update="@form messages" action="#{crudBean.saveBtnOnclick}"
-						rendered="#{crudBean.mode == 'C'}" icon="pi pi-save" styleClass="ui-button-success"/>
+						rendered="#{crudBean.mode == 'C'}" icon="pi pi-save"
+						styleClass="ui-button-success" />
 
 					<p:commandButton id="updateBtn" value="Update" update="@form"
 						action="#{crudBean.updateBtnOnclick}" icon="pi pi-user-edit"
@@ -83,7 +84,7 @@
 					</p:commandButton>
 					<p:commandButton id="backPageBtn" value="Go Back" update="@form"
 						action="#{crudBean.backBtnOnclick}" icon="pi pi-chevron-left"
-						immediate="true"/>
+						immediate="true" />
 				</div>
 			</div>
 		</p:panel>
