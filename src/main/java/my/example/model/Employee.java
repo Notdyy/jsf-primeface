@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Date; // เพิ่ม import
 import java.util.UUID;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@Data
+@EqualsAndHashCode(of = "id")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 

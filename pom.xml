@@ -32,7 +32,7 @@
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
-		<my.lombok>1.18.2</my.lombok>
+		<my.lombok>1.18.22</my.lombok>
 
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>
@@ -114,6 +114,13 @@
 			<artifactId>primeflex</artifactId>
 			<version>3.3.1</version>
 		</dependency>
+		<!-- inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
 	</dependencies>
 
 

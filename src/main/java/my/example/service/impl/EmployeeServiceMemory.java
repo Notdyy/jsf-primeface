@@ -1,4 +1,4 @@
-package my.example.service;
+package my.example.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,17 +9,25 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import my.example.model.Employee;
+import javax.faces.bean.ApplicationScoped;
 
-public class EmployeeServiceMemory {
+import my.example.model.Employee;
+import my.example.service.EmployeeService;
+import my.example.service.qualifier.Repository;
+
+@ApplicationScoped
+@Repository(value = Repository.MEMORY)
+public class EmployeeServiceMemory implements EmployeeService{
 
     private static final Logger log = Logger.getLogger(EmployeeServiceMemory.class.getName());
     public static HashMap<String, Employee> employeeMap = new HashMap<String, Employee>();
-
+    
+    @Override
     public void add(Employee employee) {
     	employeeMap.put(employee.getId(), employee);
     }
-
+    
+    @Override
     public int update(Employee employee) {
         if (employeeMap.containsKey(employee.getId())) {
             employeeMap.put(employee.getId(), employee);
@@ -28,7 +36,8 @@ public class EmployeeServiceMemory {
             return 0;
         }
     }
-
+    
+    @Override
     public List<Employee> search(Employee employee) {
         List<Employee> employeeList = new ArrayList<Employee>();
         for (Map.Entry<String, Employee> entry : employeeMap.entrySet()) {
@@ -36,7 +45,8 @@ public class EmployeeServiceMemory {
         }
         return employeeList;
     }
-
+    
+    @Override
     public int delete(String id) {
         if (employeeMap.containsKey(id)) {
             employeeMap.remove(id);
@@ -45,7 +55,8 @@ public class EmployeeServiceMemory {
             return 0;
         }
     }
-
+    
+    @Override
     public Employee getById(String id) {
         if (id != null) {
             return employeeMap.getOrDefault(id, null);
@@ -54,6 +65,7 @@ public class EmployeeServiceMemory {
     }
     
     // ข้อมูลจำลอง
+    @Override
     public void mock() {
         if (!employeeMap.isEmpty()) {
             return;
