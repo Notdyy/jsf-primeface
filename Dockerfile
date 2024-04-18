@@ -12,4 +12,4 @@ FROM tomcat:9-jdk8-openjdk
 COPY --from=build /app/target/jsf-primefaces-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+#CMD ["catalina.sh", "run"]
