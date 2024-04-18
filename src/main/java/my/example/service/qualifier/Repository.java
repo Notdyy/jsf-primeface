@@ -17,7 +17,8 @@ import javax.inject.Qualifier;
 	ElementType.METHOD,
 	ElementType.FIELD,
 	ElementType.PARAMETER,
-	ElementType.TYPE})
+	ElementType.TYPE
+	})
 public @interface Repository {
     String value();
 
