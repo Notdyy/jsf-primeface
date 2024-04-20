@@ -1,5 +1,6 @@
 package my.example.service.impl;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class EmployeeServiceMemory implements EmployeeService{
 
     private static final Logger log = Logger.getLogger(EmployeeServiceMemory.class.getName());
     public static HashMap<String, Employee> employeeMap = new HashMap<String, Employee>();
+    
+    // เนื่องจากคุณเปลี่ยนให้ employeeMap เป็น transient คุณต้องเพิ่มเมทอด readObject และ writeObject เพื่อทำการ Serialization
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        employeeMap = new HashMap<String, Employee>();
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
     
     @Override
     public void add(Employee employee) {
