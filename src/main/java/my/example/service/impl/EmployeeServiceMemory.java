@@ -1,6 +1,7 @@
 package my.example.service.impl;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,12 +19,13 @@ import my.example.service.qualifier.Repository;
 
 @ApplicationScoped
 @Repository(value = Repository.MEMORY)
-public class EmployeeServiceMemory implements EmployeeService{
-
+public class EmployeeServiceMemory implements EmployeeService, Serializable{
+	
+	private static final long serialVersionUID = 1L; // สร้าง serialVersionUID เพื่อป้องกันปัญหา serialization
     private static final Logger log = Logger.getLogger(EmployeeServiceMemory.class.getName());
     public static HashMap<String, Employee> employeeMap = new HashMap<String, Employee>();
     
-    // เนื่องจากคุณเปลี่ยนให้ employeeMap เป็น transient คุณต้องเพิ่มเมทอด readObject และ writeObject เพื่อทำการ Serialization
+    // เปลี่ยนให้ employeeMap เป็น transient คุณต้องเพิ่มเมทอด readObject และ writeObject เพื่อทำการ Serialization
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         employeeMap = new HashMap<String, Employee>();
