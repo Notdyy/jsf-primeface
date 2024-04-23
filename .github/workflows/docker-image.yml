@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker pull notdyy2544/jsfprimeface:latest
             docker stop jsfprimeface || true
             docker rm jsfprimeface || true
+            docker pull notdyy2544/jsfprimeface:latest
             docker run -d --name your-container-name -p 80:8080 notdyy2544/jsfprimeface:latest
