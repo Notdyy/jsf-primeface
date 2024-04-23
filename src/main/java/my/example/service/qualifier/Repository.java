@@ -20,8 +20,9 @@ import javax.inject.Qualifier;
     ElementType.TYPE
     })
 public @interface Repository {
-    String value();
 
-    public static final String MEMORY = "memory";
+    public static final String MEMORY = "MEMORY";
     public static final String DATABASE = "database";
+    
+    String value();
 }

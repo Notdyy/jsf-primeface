@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
-
 import my.example.model.Employee;
 import my.example.service.EmployeeService;
 import my.example.service.qualifier.Repository;
@@ -26,17 +25,21 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
     
     @Override
     public void add(Employee employee) {
-    	employeeMap.put(employee.getId(), employee);
+        if (employee == null) {
+            log.log(Level.SEVERE, "Attempted to add null employee.");
+            throw new IllegalArgumentException("Cannot add null employee.");
+        }
+        employeeMap.put(employee.getId(), employee);
     }
     
     @Override
     public int update(Employee employee) {
-        if (employeeMap.containsKey(employee.getId())) {
-            employeeMap.put(employee.getId(), employee);
-            return 1;
-        } else {
+        if (employee == null || !employeeMap.containsKey(employee.getId())) {
+            log.log(Level.SEVERE, "Attempted to update non-existing or null employee.");
             return 0;
         }
+        employeeMap.put(employee.getId(), employee);
+        return 1;
     }
     
     @Override
@@ -50,12 +53,12 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
     
     @Override
     public int delete(String id) {
-        if (employeeMap.containsKey(id)) {
-            employeeMap.remove(id);
-            return 1;
-        } else {
+        if (id == null || !employeeMap.containsKey(id)) {
+            log.log(Level.SEVERE, "Attempted to delete non-existing or null employee.");
             return 0;
         }
+        employeeMap.remove(id);
+        return 1;
     }
     
     @Override

@@ -11,15 +11,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import my.example.model.Employee;
-import my.example.service.impl.EmployeeServiceMemory;
+import my.example.service.EmployeeService;
+import my.example.service.qualifier.Repository;
 
-@ManagedBean
+@Named("crudBean")
 @ViewScoped
 public class CrudBean implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,19 +30,20 @@ public class CrudBean implements Serializable {
     private Employee employeeEdit;
     private Employee selectedMember;
     private List<Employee> employeeList;
+    
+    private static final String ERROR_MESSAGE = "Error";
+    private static final String MESSAGE_TARGET = "form:messages";
 
     @Inject
-    private EmployeeServiceMemory service = new EmployeeServiceMemory();
-    
-    // Constructor
+    @Repository(Repository.MEMORY)
+    private EmployeeService service;
+
     @PostConstruct
     public void init() {
         mode = "R";
         employeeCriteria = new Employee();
         service.mock();
     }
-
-    // Getter and Setter methods
 
     public String getMode() {
         return mode;
@@ -83,14 +85,12 @@ public class CrudBean implements Serializable {
         this.employeeList = employeeList;
     }
 
-    // Action methods
-
     public void searchBtnOnclick() {
         try {
             employeeList = service.search(employeeCriteria);
         } catch (Exception e) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "เกิดข้อผิดพลาดในการค้นหาข้อมูล");
-            FacesContext.getCurrentInstance().addMessage("form:messages", message);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MESSAGE, "เกิดข้อผิดพลาดในการค้นหาข้อมูล");
+            FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
         }
     }
 
@@ -105,34 +105,34 @@ public class CrudBean implements Serializable {
     }
 
     public void saveBtnOnclick() {
-    	   if (!isValidEmployee(employeeEdit)) {
-    	       return;
-    	   }
-            service.add(employeeEdit);
-            mode = "U";
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "บันทึกข้อมูลเรียบร้อย.");
-            FacesContext.getCurrentInstance().addMessage("form:messages", message);
+        if (!isValidEmployee(employeeEdit)) {
+            return;
+        }
+        service.add(employeeEdit);
+        mode = "U";
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "บันทึกข้อมูลเรียบร้อย.");
+        FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
     }
 
     public void updateBtnOnclick() {
-    	   if (!isValidEmployee(employeeEdit)) {
-    	       return;
-    	   }
-            service.update(employeeEdit);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "แก้ไขข้อมูลเรียบร้อย.");
-            FacesContext.getCurrentInstance().addMessage("form:messages", message);
+        if (!isValidEmployee(employeeEdit)) {
+            return;
+        }
+        service.update(employeeEdit);
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "แก้ไขข้อมูลเรียบร้อย.");
+        FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
     }
 
     public void deleteBtnOnclick() {
         service.delete(employeeEdit.getId());
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "ลบข้อมูลเรียบร้อย.");
-        FacesContext.getCurrentInstance().addMessage("form:messages", message);
+        FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
     }
 
     public void backBtnOnclick() {
         mode = "R";
     }
-    
+
     public void resetBtnOnclick() {
         if (mode.equals("R")) {
             resetForm();
@@ -141,62 +141,59 @@ public class CrudBean implements Serializable {
             resetFormToSelectedEmployee();
         }
     }
-    
+
     private void resetForm() {
-        // รีเซ็ตค่าที่ต้องการเรียกใช้งานทั้งหมดในโหมด R
         employeeCriteria = new Employee();
     }
 
     private void startSearch() {
-        // ทำการค้นหาโดยใช้เงื่อนไขใน employeeCriteria และอัปเดต employeeList
         employeeList = service.search(employeeCriteria);
     }
 
     private void resetFormToSelectedEmployee() {
-    	if (selectedMember != null) { // ตรวจสอบว่า selectedMember ไม่เป็น null
-    		employeeEdit = new Employee(selectedMember); // Use copy constructor
+        if (selectedMember != null) {
+            employeeEdit = new Employee(selectedMember);
         }
     }
 
-
     public String calculateAge(Date birthdate) {
-    	   if (birthdate != null) {
-    	       try {
-    	           SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    	           LocalDate birthdateDate = LocalDate.parse(formatter.format(birthdate), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    	           Period period = Period.between(birthdateDate, LocalDate.now());
-    	           
-    	           if (period.getYears() >= 2) {
-    	               return period.getYears() + " years " + period.getMonths() + " months " + "and " + period.getDays() + " days.";
-    	           } else {
-    	               return "อายุต้องมากกว่า 2 ปี";
-    	           }
-    	       } catch (DateTimeParseException e) {
-    	           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "เกิดข้อผิดพลาดในการคำนวณอายุ.");
-    	           FacesContext.getCurrentInstance().addMessage("form:messages", message);
-    	           return "";
-    	       }
-    	   } else {
-    	       return "";
-    	   }
+        if (birthdate != null) {
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                LocalDate birthdateDate = LocalDate.parse(formatter.format(birthdate), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                Period period = Period.between(birthdateDate, LocalDate.now());
+
+                if (period.getYears() >= 2) {
+                    return period.getYears() + " years " + period.getMonths() + " months " + "and " + period.getDays() + " days.";
+                } else {
+                    return "อายุต้องมากกว่า 2 ปี";
+                }
+            } catch (DateTimeParseException e) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MESSAGE, "เกิดข้อผิดพลาดในการคำนวณอายุ.");
+                FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
+                return "";
+            }
+        } else {
+            return "";
+        }
     }
-    
+
     private boolean isValidEmployee(Employee employee) {
-    	   if (employee.getFirstName() == null || employee.getFirstName().isEmpty() ||
-    	       employee.getLastName() == null || employee.getLastName().isEmpty() ||
-    	       employee.getBirthdate() == null) {
-    	       FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "กรุณากรอกข้อมูลในฟิลด์ที่จำเป็นทั้งหมด.");
-    	       FacesContext.getCurrentInstance().addMessage("form:messages", message);
-    	       return false;
-    	   }
-    	   
-    	   String ageMessage = calculateAge(employee.getBirthdate());
-    	   if (ageMessage.startsWith("อายุต้องมากกว่า 2 ปี")) {
-    	       FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "อายุต้องมากกว่า 2 ปีจึงจะเพิ่มข้อมูลได้.");
-    	       FacesContext.getCurrentInstance().addMessage("form:messages", message);
-    	       return false;
-    	   }
-    	   
-    	   return true;
-    	}
+        if (employee.getFirstName() == null || employee.getFirstName().isEmpty() ||
+            employee.getLastName() == null || employee.getLastName().isEmpty() ||
+            employee.getBirthdate() == null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MESSAGE, "กรุณากรอกข้อมูลในฟิลด์ที่จำเป็นทั้งหมด.");
+            FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
+            return false;
+        }
+
+        String ageMessage = calculateAge(employee.getBirthdate());
+        if (ageMessage.startsWith("อายุต้องมากกว่า 2 ปี")) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MESSAGE, "อายุต้องมากกว่า 2 ปีจึงจะเพิ่มข้อมูลได้.");
+            FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
+            return false;
+        }
+
+        return true;
+    }
 }

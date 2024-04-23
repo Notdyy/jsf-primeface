@@ -37,9 +37,38 @@
 
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>
+		
+		
+		<my.cdi-api>2.0.SP1</my.cdi-api>
+        <my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
 	</properties>
 
 	<dependencies>
+		<!-- CDI DEPS START -->
+		<dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>${my.cdi-api}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Weld (CDI Implementation) used this version for @Inject in @FacesConverter and @FacesValidator -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>${my.weld-servlet-shaded}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- CDI DEPS END -->
+        
+        <!-- ========= JPA ========= -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${my.org.eclipse.persistence}</version>
+			<scope>compile</scope>
+		</dependency>
 
 		<!-- Complied Scope  -->
 
@@ -65,12 +94,6 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>${my.commons-beanutils}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>eclipselink</artifactId>
-			<version>${my.org.eclipse.persistence}</version>
 			<scope>compile</scope>
 		</dependency>
 

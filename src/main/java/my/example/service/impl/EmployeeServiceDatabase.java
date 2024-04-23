@@ -1,6 +1,8 @@
 package my.example.service.impl;
 
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 
 import my.example.model.Employee;
@@ -38,7 +40,7 @@ public class EmployeeServiceDatabase implements EmployeeService{
         throw new UnsupportedOperationException(ERROR_MESSAGE);
     }
 
-    @Override
+    @PostConstruct
     public void mock() {
         throw new UnsupportedOperationException(ERROR_MESSAGE);
     }
