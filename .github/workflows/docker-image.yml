@@ -44,5 +44,6 @@ jobs:
           script: |
             docker stop jsfprimeface || true
             docker rm jsfprimeface || true
+            docker rmi notdyy2544/jsfprimeface:latest || true
             docker pull notdyy2544/jsfprimeface:latest
             docker run -d --name jsfprimeface -p 80:8080 notdyy2544/jsfprimeface:latest
