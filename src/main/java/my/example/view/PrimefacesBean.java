@@ -18,7 +18,7 @@ public class PrimefacesBean implements Serializable {
 	private Person person = new Person();
 
 	@ManagedProperty("#{nameService}") // inject NameService bean
-	private NameService nameService;
+	private transient NameService nameService;
 
 	private String fullName;
 
@@ -59,10 +59,9 @@ public class PrimefacesBean implements Serializable {
 	public String personSexFull() {
 		String sex = this.person.getSex();
 		if (sex != null) {
-			switch (sex) {
-			case "M":
+			if (sex.equals("M")) {
 				return "Male";
-			case "F":
+			} else if (sex.equals("F")) {
 				return "Female";
 			}
 		}
@@ -70,13 +69,11 @@ public class PrimefacesBean implements Serializable {
 	}
 
 	public void contactPreferenceChanged() {
-//		if (this.person.getContactPreference().equals("phone")) {
-//			this.person.setEmail("");
-//		} else {
-//			this.person.setPhoneNumber("");
-//		}
-		this.person.setEmail("");
-		this.person.setPhoneNumber("");
+		if ("phone".equals(this.person.getContactPreference())) {
+			this.person.setEmail("");
+		} else {
+			this.person.setPhoneNumber("");
+		}
 	}
 
 }

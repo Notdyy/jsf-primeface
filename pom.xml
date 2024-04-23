@@ -29,6 +29,7 @@
 		<my.org.glassfish.javax.faces>2.3.0-m02</my.org.glassfish.javax.faces>
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
+		<my.org.eclipse.persistence>2.5.2</my.org.eclipse.persistence>
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
@@ -41,7 +42,7 @@
 	<dependencies>
 
 		<!-- Complied Scope  -->
-		
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -66,6 +67,13 @@
 			<version>${my.commons-beanutils}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${my.org.eclipse.persistence}</version>
+			<scope>compile</scope>
+		</dependency>
+
 
 		<!-- เพิ่ม Dependency สำหรับ javax.validation -->
 		<dependency>

@@ -14,11 +14,11 @@ import javax.inject.Qualifier;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({
-	ElementType.METHOD,
-	ElementType.FIELD,
-	ElementType.PARAMETER,
-	ElementType.TYPE
-	})
+    ElementType.METHOD,
+    ElementType.FIELD,
+    ElementType.PARAMETER,
+    ElementType.TYPE
+    })
 public @interface Repository {
     String value();
 

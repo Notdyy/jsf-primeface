@@ -19,10 +19,10 @@ $( document ).ready( window_onload );
 </script>
 <script type="text/javascript">
 function submitForm(){
-	fnameStr = $("#myForm").find( "input[name='fname']" ).val();
-	lnameStr = $("#myForm").find( "input[name='lname']" ).val();
+	let fnameStr = $("#myForm").find( "input[name='fname']" ).val();
+	let lnameStr = $("#myForm").find( "input[name='lname']" ).val();
  
-	urlStr = "http://localhost:8080/jsf-primefaces/text-result-servlet";
+	let urlStr = "http://localhost:8080/jsf-primefaces/text-result-servlet";
 
 	$.post(
 			urlStr,{ "fname":fnameStr , "lname":lnameStr }, 
@@ -42,7 +42,7 @@ function submitForm(){
 	  	<input id="submitBtn" type="button" value="Submit"><br>
 	  	<br>
 	  	<label for="fullnameid">Full Name :</label>
-	  	<label id="fullnameid" ></label>
+		<label id="fullnameid" ></label>
   	</form> 
 </body>
 </html>

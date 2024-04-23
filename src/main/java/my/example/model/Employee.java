@@ -54,13 +54,10 @@ public class Employee implements Serializable {
     }
 
     // Clone method
-    @Override
-    public Employee clone() {
-        try {
-            return (Employee) super.clone();
-        } catch (CloneNotSupportedException e) {
-            // This should never happen since Employee implements Cloneable
-            throw new InternalError(e);
-        }
+    public Employee (Employee other) {
+        	this.id = other.id;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+            this.birthdate = other.birthdate != null ? new Date(other.birthdate.getTime()) : null;
     }
 }

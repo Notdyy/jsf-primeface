@@ -18,7 +18,7 @@ public class JsfBean  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Person person= new Person();
-	private NameService service = new NameService();
+	private transient NameService service = new NameService();
 	private String fullName;
 	
 	public String returnPage() {
