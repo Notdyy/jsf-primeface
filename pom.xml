@@ -30,6 +30,13 @@
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
 		<my.org.eclipse.persistence>2.5.2</my.org.eclipse.persistence>
+		
+		<my.cdi-api>2.0.SP1</my.cdi-api>
+        <my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
+
+        <my.javax.el.el-api>2.2</my.javax.el.el-api>
+
+        <my.javaee.web.api>8.0.1</my.javaee.web.api>
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
@@ -96,7 +103,13 @@
 			<version>${my.commons-beanutils}</version>
 			<scope>compile</scope>
 		</dependency>
-
+		
+		<dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>${my.javax.el.el-api}</version>
+            <scope>compile</scope>
+        </dependency>
 
 		<!-- เพิ่ม Dependency สำหรับ javax.validation -->
 		<dependency>
@@ -107,7 +120,13 @@
 		</dependency>
 
 		<!-- Provided Scope  -->
-
+		
+		<dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>${my.javaee.web.api}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
