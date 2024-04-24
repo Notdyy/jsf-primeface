@@ -10,5 +10,4 @@ public interface EmployeeService {
     List<Employee> search(Employee employee);
     int delete(String id);
     Employee getById(String id);
-    void mock();
 }

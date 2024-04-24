@@ -3,7 +3,7 @@ package my.example.service.impl;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
 
 import my.example.model.Employee;
 import my.example.service.EmployeeService;

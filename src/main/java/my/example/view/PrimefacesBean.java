@@ -2,22 +2,20 @@ package my.example.view;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import my.example.model.Person;
 import my.example.service.NameService;
 
+@Named("pfBean")
 @ViewScoped
-@ManagedBean(name = "pfBean")
 public class PrimefacesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Person person = new Person();
 
-	@ManagedProperty("#{nameService}") // inject NameService bean
 	private transient NameService nameService;
 
 	private String fullName;

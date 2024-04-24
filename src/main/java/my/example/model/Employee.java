@@ -1,7 +1,7 @@
 package my.example.model;
 
 import java.io.Serializable;
-import java.util.Date; // เพิ่ม import
+import java.util.Date;
 import java.util.UUID;
 
 import lombok.Data;
@@ -19,6 +19,13 @@ public class Employee implements Serializable {
 
     public Employee() {
         id = UUID.randomUUID().toString();
+    }
+
+    public Employee(String firstName, String lastName, Date birthdate) {
+        this.id = UUID.randomUUID().toString();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
     }
 
     public String getId() {
@@ -49,15 +56,15 @@ public class Employee implements Serializable {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) { //เปลี่ยน signature ของเมทอด setBirthdate
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
     // Clone method
-    public Employee (Employee other) {
-        	this.id = other.id;
-            this.firstName = other.firstName;
-            this.lastName = other.lastName;
-            this.birthdate = other.birthdate != null ? new Date(other.birthdate.getTime()) : null;
+    public Employee(Employee other) {
+        this.id = other.id;
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
+        this.birthdate = other.birthdate != null ? new Date(other.birthdate.getTime()) : null;
     }
 }

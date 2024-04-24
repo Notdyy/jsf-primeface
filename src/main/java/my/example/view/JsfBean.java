@@ -2,14 +2,14 @@ package my.example.view;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 import my.example.model.Person;
 import my.example.service.NameService;
 
 @SessionScoped
-@ManagedBean
+@Named("jsfBean")
 public class JsfBean  implements Serializable{
 	
 	/**

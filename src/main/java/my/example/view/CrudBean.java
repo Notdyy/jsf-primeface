@@ -1,20 +1,21 @@
 package my.example.view;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.event.SelectEvent;
 
 import my.example.model.Employee;
 import my.example.service.EmployeeService;
@@ -30,7 +31,7 @@ public class CrudBean implements Serializable {
     private Employee employeeEdit;
     private Employee selectedMember;
     private List<Employee> employeeList;
-    
+
     private static final String ERROR_MESSAGE = "Error";
     private static final String MESSAGE_TARGET = "form:messages";
 
@@ -42,7 +43,7 @@ public class CrudBean implements Serializable {
     public void init() {
         mode = "R";
         employeeCriteria = new Employee();
-        service.mock();
+        searchBtnOnclick();
     }
 
     public String getMode() {
@@ -133,10 +134,16 @@ public class CrudBean implements Serializable {
         mode = "R";
     }
 
+    public void onRowSelect(SelectEvent<Employee> event) {
+        selectedMember = event.getObject();
+        mode = "U";
+        employeeEdit = new Employee(selectedMember);
+    }
+
     public void resetBtnOnclick() {
         if (mode.equals("R")) {
             resetForm();
-            startSearch();
+            searchBtnOnclick();
         } else if (mode.equals("U")) {
             resetFormToSelectedEmployee();
         }
@@ -144,10 +151,6 @@ public class CrudBean implements Serializable {
 
     private void resetForm() {
         employeeCriteria = new Employee();
-    }
-
-    private void startSearch() {
-        employeeList = service.search(employeeCriteria);
     }
 
     private void resetFormToSelectedEmployee() {
@@ -159,8 +162,7 @@ public class CrudBean implements Serializable {
     public String calculateAge(Date birthdate) {
         if (birthdate != null) {
             try {
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                LocalDate birthdateDate = LocalDate.parse(formatter.format(birthdate), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate birthdateDate = birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 Period period = Period.between(birthdateDate, LocalDate.now());
 
                 if (period.getYears() >= 2) {
@@ -180,8 +182,8 @@ public class CrudBean implements Serializable {
 
     private boolean isValidEmployee(Employee employee) {
         if (employee.getFirstName() == null || employee.getFirstName().isEmpty() ||
-            employee.getLastName() == null || employee.getLastName().isEmpty() ||
-            employee.getBirthdate() == null) {
+                employee.getLastName() == null || employee.getLastName().isEmpty() ||
+                employee.getBirthdate() == null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MESSAGE, "กรุณากรอกข้อมูลในฟิลด์ที่จำเป็นทั้งหมด.");
             FacesContext.getCurrentInstance().addMessage(MESSAGE_TARGET, message);
             return false;
