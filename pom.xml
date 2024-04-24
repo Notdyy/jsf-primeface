@@ -29,14 +29,6 @@
 		<my.org.glassfish.javax.faces>2.3.0-m02</my.org.glassfish.javax.faces>
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
-		<my.org.eclipse.persistence>2.5.2</my.org.eclipse.persistence>
-		
-		<my.cdi-api>2.0.SP1</my.cdi-api>
-        <my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
-
-        <my.javax.el.el-api>2.2</my.javax.el.el-api>
-
-        <my.javaee.web.api>8.0.1</my.javaee.web.api>
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
@@ -45,12 +37,17 @@
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>
 		
-		
 		<my.cdi-api>2.0.SP1</my.cdi-api>
         <my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
+        <my.javax.el.el-api>2.2</my.javax.el.el-api>
+        <my.javaee.web.api>8.0.1</my.javaee.web.api>
+		<my.cdi-api>2.0.SP1</my.cdi-api>
+		
 	</properties>
 
 	<dependencies>
+		<!-- Complied Scope  -->
+		
 		<!-- CDI DEPS START -->
 		<dependency>
             <groupId>javax.enterprise</groupId>
@@ -68,17 +65,6 @@
         </dependency>
 
         <!-- CDI DEPS END -->
-        
-        <!-- ========= JPA ========= -->
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>eclipselink</artifactId>
-			<version>${my.org.eclipse.persistence}</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<!-- Complied Scope  -->
-
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -131,7 +117,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${my.javax.servlet-api}</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -149,12 +135,14 @@
 		</dependency>
 
 		<!-- Add javax.annotation-api dependency -->
+		<!--
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
 			<version>1.3.2</version>
 			<scope>compile</scope>
 		</dependency>
+		-->
 		<!-- FontAwesome -->
 		<dependency>
 			<groupId>org.webjars</groupId>
