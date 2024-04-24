@@ -23,7 +23,7 @@ import my.example.service.EmployeeService;
 import my.example.service.qualifier.Repository;
 
 @Data
-@Named
+@Named("crudBean")
 @ViewScoped
 public class CrudBean implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class CrudBean implements Serializable {
     private static final String MESSAGE_TARGET = "form:messages";
 
     @Inject
-    @Repository(Repository.MEMORY)
+    @Repository(value = Repository.MEMORY)
     private EmployeeService service;
 
     @PostConstruct
