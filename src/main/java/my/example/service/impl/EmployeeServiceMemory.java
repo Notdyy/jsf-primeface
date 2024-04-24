@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.bean.ApplicationScoped;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import my.example.model.Employee;
 import my.example.service.EmployeeService;
 import my.example.service.qualifier.Repository;
@@ -23,7 +24,6 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
     private static final Logger log = Logger.getLogger(EmployeeServiceMemory.class.getName());
     private static Map<String, Employee> employeeMap = new HashMap<>();
     
-    @Override
     public void add(Employee employee) {
         if (employee == null) {
             log.log(Level.SEVERE, "Attempted to add null employee.");
@@ -32,7 +32,6 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         employeeMap.put(employee.getId(), employee);
     }
     
-    @Override
     public int update(Employee employee) {
         if (employee == null || !employeeMap.containsKey(employee.getId())) {
             log.log(Level.SEVERE, "Attempted to update non-existing or null employee.");
@@ -41,8 +40,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         employeeMap.put(employee.getId(), employee);
         return 1;
     }
-    
-    @Override
+
     public List<Employee> search(Employee employee) {
         List<Employee> employeeList = new ArrayList<>();
         for (Map.Entry<String, Employee> entry : employeeMap.entrySet()) {
@@ -51,7 +49,6 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         return employeeList;
     }
     
-    @Override
     public int delete(String id) {
         if (id == null || !employeeMap.containsKey(id)) {
             log.log(Level.SEVERE, "Attempted to delete non-existing or null employee.");
@@ -61,7 +58,6 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         return 1;
     }
     
-    @Override
     public Employee getById(String id) {
         if (id != null) {
             return employeeMap.getOrDefault(id, null);
@@ -70,7 +66,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
     }
     
     // ข้อมูลจำลอง
-    @Override
+    @PostConstruct
     public void mock() {
         if (!employeeMap.isEmpty()) {
             return;
