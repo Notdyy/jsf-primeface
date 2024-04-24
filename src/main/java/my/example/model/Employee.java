@@ -4,10 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+@Entity
+@Table(name = "employees")
 @Data
+@ToString
 @EqualsAndHashCode(of = "id")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;

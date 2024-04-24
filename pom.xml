@@ -26,7 +26,7 @@
 
 		<!-- Complied Scope  -->
 		<my.org.primefaces>13.0.7</my.org.primefaces>
-		<my.org.glassfish.javax.faces>2.3.0-m02</my.org.glassfish.javax.faces>
+		<my.org.glassfish.javax.faces>2.4.0</my.org.glassfish.javax.faces>
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
 

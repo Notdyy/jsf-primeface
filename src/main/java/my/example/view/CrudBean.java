@@ -17,11 +17,13 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
+import lombok.Data;
 import my.example.model.Employee;
 import my.example.service.EmployeeService;
 import my.example.service.qualifier.Repository;
 
-@Named("crudBean")
+@Data
+@Named
 @ViewScoped
 public class CrudBean implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -10,8 +10,8 @@ RUN mvn clean install
 # Stage 2: Deploy the built artifact to Tomcat.
 FROM tomcat:9-jdk8-openjdk
 # Clean Tomcat server
+RUN rm -rf /usr/local/tomcat/webapps/ROOT/*
 COPY --from=build /app/target/jsf-primefaces-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-RUN rm -rf /usr/local/tomcat/webapps/ROOT/*
 
 #CMD ["catalina.sh", "run"]
