@@ -3,9 +3,7 @@ package my.example.view;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,9 +35,12 @@ public class CrudBean implements Serializable {
     private static final String ERROR_MESSAGE = "Error";
     private static final String MESSAGE_TARGET = "form:messages";
 
+    private final EmployeeService service;
+
     @Inject
-    @Repository(value = Repository.MEMORY)
-    private EmployeeService service;
+    public CrudBean(@Repository(Repository.DATABASE) EmployeeService service) {
+        this.service = service;
+    }
 
     @PostConstruct
     public void init() {
@@ -138,8 +139,10 @@ public class CrudBean implements Serializable {
 
     public void onRowSelect(SelectEvent<Employee> event) {
         selectedMember = event.getObject();
-        mode = "U";
-        employeeEdit = new Employee(selectedMember);
+        if(selectedMember != null) {
+            mode = "U";
+            employeeEdit = new Employee(selectedMember);
+        }
     }
 
     public void resetBtnOnclick() {
@@ -161,11 +164,10 @@ public class CrudBean implements Serializable {
         }
     }
 
-    public String calculateAge(Date birthdate) {
+    public String calculateAge(LocalDate birthdate) {
         if (birthdate != null) {
             try {
-                LocalDate birthdateDate = birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                Period period = Period.between(birthdateDate, LocalDate.now());
+                Period period = Period.between(birthdate, LocalDate.now());
 
                 if (period.getYears() >= 2) {
                     return period.getYears() + " years " + period.getMonths() + " months " + "and " + period.getDays() + " days.";

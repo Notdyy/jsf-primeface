@@ -1,8 +1,7 @@
 package my.example.service.impl;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +23,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
     private static final Logger log = Logger.getLogger(EmployeeServiceMemory.class.getName());
     private static Map<String, Employee> employeeMap = new HashMap<>();
     
+    @Override
     public void add(Employee employee) {
         if (employee == null) {
             log.log(Level.SEVERE, "Attempted to add null employee.");
@@ -32,6 +32,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         employeeMap.put(employee.getId(), employee);
     }
     
+    @Override
     public int update(Employee employee) {
         if (employee == null || !employeeMap.containsKey(employee.getId())) {
             log.log(Level.SEVERE, "Attempted to update non-existing or null employee.");
@@ -41,6 +42,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         return 1;
     }
 
+    @Override
     public List<Employee> search(Employee employee) {
         List<Employee> employeeList = new ArrayList<>();
         for (Map.Entry<String, Employee> entry : employeeMap.entrySet()) {
@@ -49,6 +51,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         return employeeList;
     }
     
+    @Override
     public int delete(String id) {
         if (id == null || !employeeMap.containsKey(id)) {
             log.log(Level.SEVERE, "Attempted to delete non-existing or null employee.");
@@ -58,6 +61,7 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         return 1;
     }
     
+    @Override
     public Employee getById(String id) {
         if (id != null) {
             return employeeMap.getOrDefault(id, null);
@@ -73,21 +77,19 @@ public class EmployeeServiceMemory implements EmployeeService, Serializable{
         }
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-            add(new Employee("John", "Doe", formatter.parse("01/01/1990")));
-            add(new Employee("Jane", "Doe", formatter.parse("15/06/1985")));
-            add(new Employee("Michael", "Smith", formatter.parse("10/03/1982")));
-            add(new Employee("Emily", "Johnson", formatter.parse("25/11/1995")));
-            add(new Employee("Daniel", "Williams", formatter.parse("03/08/1987")));
-            add(new Employee("Olivia", "Brown", formatter.parse("12/09/1993")));
-            add(new Employee("James", "Miller", formatter.parse("19/05/1984")));
-            add(new Employee("Emma", "Davis", formatter.parse("08/12/1990")));
-            add(new Employee("Alexander", "Garcia", formatter.parse("30/04/1986")));
-            add(new Employee("Sophia", "Rodriguez", formatter.parse("17/10/1992")));
-            add(new Employee("William", "Martinez", formatter.parse("22/07/1989")));
-            add(new Employee("Isabella", "Hernandez", formatter.parse("05/02/1998")));
-        } catch (ParseException e) {
+            add(new Employee("John", "Doe", LocalDate.of(1990, 1, 1)));
+            add(new Employee("Jane", "Doe", LocalDate.of(1985, 6, 15)));
+            add(new Employee("Michael", "Smith", LocalDate.of(1982, 3, 10)));
+            add(new Employee("Emily", "Johnson", LocalDate.of(1995, 11, 25)));
+            add(new Employee("Daniel", "Williams", LocalDate.of(1987, 8, 3)));
+            add(new Employee("Olivia", "Brown", LocalDate.of(1993, 9, 12)));
+            add(new Employee("James", "Miller", LocalDate.of(1984, 5, 19)));
+            add(new Employee("Emma", "Davis", LocalDate.of(1990, 12, 8)));
+            add(new Employee("Alexander", "Garcia", LocalDate.of(1986, 4, 30)));
+            add(new Employee("Sophia", "Rodriguez", LocalDate.of(1992, 10, 17)));
+            add(new Employee("William", "Martinez", LocalDate.of(1989, 7, 22)));
+            add(new Employee("Isabella", "Hernandez", LocalDate.of(1998, 2, 5)));
+        } catch (Exception e) {
             log.log(Level.SEVERE, "Error parsing date", e);
         }
         log.info("Mock data completed");

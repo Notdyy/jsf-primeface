@@ -29,6 +29,8 @@
 		<my.org.glassfish.javax.faces>2.4.0</my.org.glassfish.javax.faces>
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
+		<my.org.hibernate.hibernate-core>5.6.6.Final</my.org.hibernate.hibernate-core>
+		<my.org.eclipse.persistence>2.5.2</my.org.eclipse.persistence>
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
@@ -36,41 +38,68 @@
 
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>
-		
+		<my.sqlite-jdbc>3.25.2</my.sqlite-jdbc>
+		<my.org.hsqldb>2.4.1</my.org.hsqldb>
+
 		<my.cdi-api>2.0.SP1</my.cdi-api>
-        <my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
-        <my.javax.el.el-api>2.2</my.javax.el.el-api>
-        <my.javaee.web.api>8.0.1</my.javaee.web.api>
+		<my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
+		<my.javax.el.el-api>2.2</my.javax.el.el-api>
+		<my.javaee.web.api>8.0.1</my.javaee.web.api>
 		<my.cdi-api>2.0.SP1</my.cdi-api>
-		
+		<my.validation-api>2.0.1.Final</my.validation-api>
+
 	</properties>
 
 	<dependencies>
 		<!-- Complied Scope  -->
-		
+
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${my.org.eclipse.persistence}</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- CDI DEPS START -->
 		<dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>${my.cdi-api}</version>
-            <scope>compile</scope>
-        </dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>${my.cdi-api}</version>
+			<scope>compile</scope>
+		</dependency>
 
-        <!-- Weld (CDI Implementation) used this version for @Inject in @FacesConverter and @FacesValidator -->
-        <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet-shaded</artifactId>
-            <version>${my.weld-servlet-shaded}</version>
-            <scope>compile</scope>
-        </dependency>
+		<!-- Weld (CDI Implementation) used this version for @Inject in
+		@FacesConverter and @FacesValidator -->
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-shaded</artifactId>
+			<version>${my.weld-servlet-shaded}</version>
+			<scope>compile</scope>
+		</dependency>
 
-        <!-- CDI DEPS END -->
+		<!-- CDI DEPS END -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>${my.org.primefaces}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${my.org.hibernate.hibernate-core}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${my.validation-api}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
@@ -89,30 +118,24 @@
 			<version>${my.commons-beanutils}</version>
 			<scope>compile</scope>
 		</dependency>
-		
-		<dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-            <version>${my.javax.el.el-api}</version>
-            <scope>compile</scope>
-        </dependency>
 
-		<!-- เพิ่ม Dependency สำหรับ javax.validation -->
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>${my.javax.el.el-api}</version>
 			<scope>compile</scope>
 		</dependency>
 
+		<!-- เพิ่ม Dependency สำหรับ javax.validation -->
+
 		<!-- Provided Scope  -->
-		
+
 		<dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>${my.javaee.web.api}</version>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>${my.javaee.web.api}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -133,6 +156,19 @@
 			<version>${my.junit}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${my.org.hsqldb}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>${my.sqlite-jdbc}</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- Add javax.annotation-api dependency -->
 		<!--
@@ -163,7 +199,6 @@
 			<version>1</version>
 			<scope>compile</scope>
 		</dependency>
-
 	</dependencies>
 
 

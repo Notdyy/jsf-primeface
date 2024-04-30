@@ -1,10 +1,12 @@
 package my.example.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,17 +20,25 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
+    @Id
+    @Column(name="id")
     private String id;
+    
+    @Column(name="firstName")
     private String firstName;
+    
+    @Column(name="lastName")
     private String lastName;
-    private Date birthdate;
+    
+    @Column(name="birthdate")
+    private LocalDate birthdate;
 
     public Employee() {
         id = UUID.randomUUID().toString();
     }
 
-    public Employee(String firstName, String lastName, Date birthdate) {
+    public Employee(String firstName, String lastName, LocalDate birthdate) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,11 +69,11 @@ public class Employee implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -72,6 +82,6 @@ public class Employee implements Serializable {
         this.id = other.id;
         this.firstName = other.firstName;
         this.lastName = other.lastName;
-        this.birthdate = other.birthdate != null ? new Date(other.birthdate.getTime()) : null;
+        this.birthdate = other.birthdate;
     }
 }
