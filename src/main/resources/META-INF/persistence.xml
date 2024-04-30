@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+   
+     <persistence-unit name="jpa_local" transaction-type="RESOURCE_LOCAL">
+    	
+	    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    	<class>my.example.model.Employee</class>
+        <properties>
+        	<property name="eclipselink.logging.level" value="INFO"/>
+    	    <!-- Set the JDBC driver and URL for HSQLDB in-memory database -->
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb" />
+            <property name="javax.persistence.jdbc.user" value="SA" />
+            <property name="javax.persistence.jdbc.password" value="" />
+             
+            <!-- Enable schema generation to create the database tables -->
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+        </properties>
+    </persistence-unit>
+    
+</persistence>
